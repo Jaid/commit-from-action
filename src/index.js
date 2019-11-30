@@ -11,18 +11,17 @@ import zahl from "zahl"
 
 /**
  * @typedef {Object} Options
- * @prop {*} commitMessage If a function is given, it will be called as function(commitManager)
- * @prop {*} mergeMessage If a function is given, it will be called as function(commitManager, pullNumber)
- * @prop {*} pullRequestTitle If a function is given, it will be called as function(commitManager)
- * @prop {*} pullRequestBody If a function is given, it will be called as function(commitManager)
- * @prop {*} branchPrefix If a function is given, it will be called as function(commitManager)
+ * @prop {*} commitMessage If a function is given, it will be called as `async function(commitManager)`
+ * @prop {*} mergeMessage If a function is given, it will be called as `async function(commitManager, pullNumber)`
+ * @prop {*} pullRequestTitle If a function is given, it will be called as `async function(commitManager)`
+ * @prop {*} pullRequestBody If a function is given, it will be called as `async function(commitManager)`
+ * @prop {*} branchPrefix If a function is given, it will be called as `async function(commitManager)`
  * @prop {boolean} autoApprove
  * @prop {boolean} autoRemoveBranch
  * @prop {string} githubTokenInputName
  */
 
 /**
- * @class
  * @example
  * import CommitManager from "commit-from-action"
  * const commitManager = new CommitManager
