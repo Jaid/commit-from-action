@@ -1,0 +1,31 @@
+{
+  "webpackConfigJaid": "nodeLib",
+  "version": "0.1.0",
+  "author": "Jaid <jaid.jsx@gmail.com> (https://github.com/Jaid)",
+  "dependencies": {
+    "@actions/core": "^1.2.0",
+    "@babel/runtime": "^7.7.4",
+    "browserslist-config-jaid-node": "^2.2.2"
+  },
+  "devDependencies": {
+    "acorn": "^7.1.0",
+    "babel-jest": "^24.9.0",
+    "babel-preset-jaid": "^6.11.1",
+    "eslint": "^6.7.1",
+    "eslint-config-jaid": "^1.37.0",
+    "jest": "^24.9.0",
+    "rimraf": "^3.0.0",
+    "webpack-config-jaid": "^5.29.1"
+  },
+  "scripts": {
+    "clean": "rimraf dist/",
+    "babel:prod": "rimraf dist/transpiled/production && NODE_ENV=production babel --out-dir dist/transpiled/production --source-maps true src",
+    "babel:dev": "rimraf dist/transpiled/development && NODE_ENV=development babel --out-dir dist/transpiled/development src",
+    "babel:test": "rimraf dist/transpiled/test && NODE_ENV=test babel --out-dir dist/transpiled/test src",
+    "build:prod": "NODE_ENV=production webpack",
+    "build:dev": "NODE_ENV=development webpack",
+    "test": "echo No test needed",
+    "prepareActionJest": "npm run build:prod"
+  },
+  "name": "commit-from-action"
+}
