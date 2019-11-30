@@ -107,6 +107,10 @@ export default class {
    * @return {Promise<void>}
    */
   async push() {
+    const isDirty = await isGitRepoDirty()
+    if (isDirty) {
+      await this.commit()
+    }
     if (!this.commits) {
       return
     }
