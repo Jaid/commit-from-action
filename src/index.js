@@ -75,7 +75,7 @@ export default class {
       branchId = nanoid("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", 8)
     }
     const branchPrefix = await resolveAny(this.options.branchPrefix, this)
-    this.branch = `${branchPrefix}-${branchId}`
+    this.branch = `${branchPrefix}${branchId}`
     await exec("git", ["config", "user.email", "action@github.com"])
     await exec("git", ["config", "user.name", "GitHub Action"])
     await exec("git", ["checkout", "-b", this.branch])
