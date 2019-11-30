@@ -11,11 +11,11 @@ import zahl from "zahl"
 
 /**
  * @typedef {Object} Options
- * @prop {*} commitMessage
- * @prop {*} mergeMessage
- * @prop {*} pullRequestTitle
- * @prop {*} pullRequestBody
- * @prop {*} branchPrefix
+ * @prop {*} commitMessage If a function is given, it will be called as function(commitManager)
+ * @prop {*} mergeMessage If a function is given, it will be called as function(commitManager, pullNumber)
+ * @prop {*} pullRequestTitle If a function is given, it will be called as function(commitManager)
+ * @prop {*} pullRequestBody If a function is given, it will be called as function(commitManager)
+ * @prop {*} branchPrefix If a function is given, it will be called as function(commitManager)
  * @prop {boolean} autoApprove
  * @prop {boolean} autoRemoveBranch
  * @prop {string} githubTokenInputName
@@ -40,13 +40,18 @@ export default class {
   branch = null
 
   /**
+   * @type {number}
+   */
+  pullNumber = null
+
+  /**
    * @constructor
-   * @param {Options} [initialValues]
+   * @param {Options} [options={}]
    */
   constructor(options = {}) {
     this.options = {
       commitMessage: "Modified repository in GitHub Action",
-      mergeMessage: pullNumber => `Automatically merged commits from pull #${pullNumber}`,
+      mergeMessage: commitManager => `Automatically merged commits from pull #${commitManager.pullNumber}`,
       pullRequestTitle: "Automatic changes from GitHub Action",
       pullRequestBody: "Hewwo!",
       autoApprove: true,
@@ -58,7 +63,7 @@ export default class {
   }
 
   /**
-   * @returns {Promise<void>}
+   * @return {Promise<void>}
    */
   async prepare() {
     if (this.branch) {
@@ -70,7 +75,7 @@ export default class {
     } else {
       branchId = nanoid("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", 8)
     }
-    const branchPrefix = await resolveAny(this.options.branchPrefix)
+    const branchPrefix = await resolveAny(this.options.branchPrefix, this)
     this.branch = `${branchPrefix}-${branchId}`
     await exec("git", ["config", "user.email", "action@github.com"])
     await exec("git", ["config", "user.name", "GitHub Action"])
@@ -78,7 +83,8 @@ export default class {
   }
 
   /**
-   * @returns {Promise<boolean>}
+   * @param {string} [commitMessage]
+   * @return {Promise<boolean>}
    */
   async commit(commitMessage) {
     const isDirty = await isGitRepoDirty()
@@ -87,14 +93,19 @@ export default class {
     }
     await this.prepare()
     await exec("git", ["add", "--all"])
-    const message = commitMessage || this.options.commitMessage
+    let message
+    if (commitMessage) {
+      message = commitMessage
+    } else {
+      message = await resolveAny(this.options.commitMessage, this)
+    }
     await exec("git", ["commit", "--all", "--message", message])
     this.commits++
     return true
   }
 
   /**
-   * @returns {Promise<void>}
+   * @return {Promise<void>}
    */
   async push() {
     if (!this.commits) {
@@ -105,20 +116,21 @@ export default class {
     const octokit = new GitHub(this.githubToken)
     const pullCreateResult = await octokit.pulls.create({
       ...context.repo,
-      title: await resolveAny(this.options.pullRequestTitle),
-      body: await resolveAny(this.options.pullRequestBody),
+      title: await resolveAny(this.options.pullRequestTitle, this),
+      body: await resolveAny(this.options.pullRequestBody, this),
       head: this.branch,
       base: "master",
     })
-    const pullLink = `https://github.com/${process.env.GITHUB_REPOSITORY}/pull/${pullCreateResult.data.number}`
+    this.pullNumber = pullCreateResult.data.number
+    const pullLink = `https://github.com/${process.env.GITHUB_REPOSITORY}/pull/${this.pullNumber}`
     console.log(`Pull with ${zahl(this.commits, "commit")} created: ${chalk.greenBright(pullLink)}`)
     if (!this.options.autoApprove) {
       return
     }
     await octokit.pulls.merge({
       ...context.repo,
-      pull_number: pullCreateResult.data.number,
-      commit_title: await resolveAny(this.options.mergeMessage, pullCreateResult.data.number),
+      pull_number: this.pullNumber,
+      commit_title: await resolveAny(this.options.mergeMessage, this),
     })
     if (!this.options.autoRemoveBranch) {
       return
