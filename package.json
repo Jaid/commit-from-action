@@ -1,16 +1,23 @@
 {
-  "webpackConfigJaid": "nodeLib",
+  "webpackConfigJaid": "nodeClass",
   "version": "0.1.0",
   "author": "Jaid <jaid.jsx@gmail.com> (https://github.com/Jaid)",
   "dependencies": {
     "@actions/core": "^1.2.0",
+    "@actions/exec": "^1.0.1",
+    "@actions/github": "^1.1.0",
     "@babel/runtime": "^7.7.4",
-    "browserslist-config-jaid-node": "^2.2.2"
+    "chalk": "^3.0.0",
+    "is-git-repo-dirty": "^1.0.0",
+    "nanoid": "^2.1.7",
+    "resolve-any": "^2.0.0",
+    "zahl": "^2.0.3"
   },
   "devDependencies": {
     "acorn": "^7.1.0",
     "babel-jest": "^24.9.0",
     "babel-preset-jaid": "^6.11.1",
+    "browserslist-config-jaid-node": "^2.2.2",
     "eslint": "^6.7.1",
     "eslint-config-jaid": "^1.37.0",
     "jest": "^24.9.0",
