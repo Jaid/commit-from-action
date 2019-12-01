@@ -44,6 +44,16 @@ export default class {
   pullNumber = null
 
   /**
+   * @type {boolean}
+   */
+  isMerged = false
+
+  /**
+   * @type {boolean}
+   */
+  isRemoved = false
+
+  /**
    * @constructor
    * @param {Options} [options={}]
    */
@@ -135,6 +145,7 @@ export default class {
       pull_number: this.pullNumber,
       commit_title: await resolveAny(this.options.mergeMessage, this),
     })
+    this.isMerged = true
     if (!this.options.autoRemoveBranch) {
       return
     }
@@ -142,6 +153,22 @@ export default class {
       ...context.repo,
       ref: `heads/${this.branch}`,
     })
+    this.isRemoved = true
+  }
+
+  async finalize() {
+    if (!this.pullNumber) {
+      return // Pull request does not exist, nothing to clean
+    }
+    if (this.options.autoApprove && !this.isMerged) {
+      console.log(`Automerging failed, pull #${this.pullNumber} will be closed now`)
+      const octokit = new GitHub(this.githubToken)
+      await octokit.pulls.update({
+        ...context.repo,
+        pull_number: this.pullNumber,
+        state: "closed",
+      })
+    }
   }
 
 }
