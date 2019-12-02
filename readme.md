@@ -5,10 +5,23 @@ Utility for making changes to a repository from a GitHub Action.
 
 
 
-## API Reference
-<a name="module_commit-from-action"></a>
+## Try it out
+Open a browser's JavaScript console and execute:
 
-## commit-from-action
+```javascript
+const scriptElement = document.createElement("script");
+scriptElement.setAttribute("type","text/javascript");
+scriptElement.setAttribute("src","https://unpkg.com/commit-from-action@1.2.0");
+document.querySelector("head").appendChild(scriptElement);
+```
+
+The module is now loaded in a variable.
+
+```javascript
+typeof commit-from-action.default
+```
+
+## Documentation
 
 * [commit-from-action](#module_commit-from-action)
     * [module.exports](#exp_module_commit-from-action--module.exports) ⏏
@@ -25,13 +38,7 @@ Utility for making changes to a repository from a GitHub Action.
         * _inner_
             * [~Options](#module_commit-from-action--module.exports..Options) : <code>Object</code>
 
-<a name="exp_module_commit-from-action--module.exports"></a>
-
-### module.exports ⏏
 **Kind**: Exported class  
-<a name="new_module_commit-from-action--module.exports_new"></a>
-
-#### new module.exports([options])
 
 | Param | Type | Default |
 | --- | --- | --- |
@@ -42,46 +49,19 @@ Utility for making changes to a repository from a GitHub Action.
 import CommitManager from "commit-from-action"
 const commitManager = new CommitManager
 ```
-<a name="module_commit-from-action--module.exports+commits"></a>
-
-#### module.exports.commits : <code>number</code>
 **Kind**: instance property of [<code>module.exports</code>](#exp_module_commit-from-action--module.exports)  
-<a name="module_commit-from-action--module.exports+branch"></a>
-
-#### module.exports.branch : <code>string</code>
 **Kind**: instance property of [<code>module.exports</code>](#exp_module_commit-from-action--module.exports)  
-<a name="module_commit-from-action--module.exports+pullNumber"></a>
-
-#### module.exports.pullNumber : <code>number</code>
 **Kind**: instance property of [<code>module.exports</code>](#exp_module_commit-from-action--module.exports)  
-<a name="module_commit-from-action--module.exports+isMerged"></a>
-
-#### module.exports.isMerged : <code>boolean</code>
 **Kind**: instance property of [<code>module.exports</code>](#exp_module_commit-from-action--module.exports)  
-<a name="module_commit-from-action--module.exports+isRemoved"></a>
-
-#### module.exports.isRemoved : <code>boolean</code>
 **Kind**: instance property of [<code>module.exports</code>](#exp_module_commit-from-action--module.exports)  
-<a name="module_commit-from-action--module.exports+prepare"></a>
-
-#### module.exports.prepare() ⇒ <code>Promise.&lt;void&gt;</code>
 **Kind**: instance method of [<code>module.exports</code>](#exp_module_commit-from-action--module.exports)  
-<a name="module_commit-from-action--module.exports+commit"></a>
-
-#### module.exports.commit([commitMessage]) ⇒ <code>Promise.&lt;boolean&gt;</code>
 **Kind**: instance method of [<code>module.exports</code>](#exp_module_commit-from-action--module.exports)  
 
 | Param | Type |
 | --- | --- |
 | [commitMessage] | <code>string</code> | 
 
-<a name="module_commit-from-action--module.exports+push"></a>
-
-#### module.exports.push() ⇒ <code>Promise.&lt;void&gt;</code>
 **Kind**: instance method of [<code>module.exports</code>](#exp_module_commit-from-action--module.exports)  
-<a name="module_commit-from-action--module.exports..Options"></a>
-
-#### module.exports~Options : <code>Object</code>
 **Kind**: inner typedef of [<code>module.exports</code>](#exp_module_commit-from-action--module.exports)  
 **Properties**
 
@@ -97,3 +77,28 @@ const commitManager = new CommitManager
 | githubTokenInputName | <code>string</code> |  |
 
 
+
+## License
+```text
+MIT License
+
+Copyright © 2019, Jaid <jaid.jsx@gmail.com> (github.com/jaid)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
