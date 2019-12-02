@@ -34,5 +34,6 @@
     "test": "echo No test needed",
     "prepareActionJest": "npm run build:prod"
   },
-  "name": "commit-from-action"
+  "name": "commit-from-action",
+  "description": "Utility for making changes to a repository from a GitHub Action."
 }
