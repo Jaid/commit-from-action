@@ -1,82 +1,64 @@
 # commit-from-action
 
 
-Utility for making changes to a repository from a GitHub Action.
+<a href="https://raw.githubusercontent.com/Jaid/commit-from-action/master/license.txt"><img src="https://img.shields.io/github/license/Jaid/commit-from-action?style=flat-square" alt="License"/></a>  
+<a href="https://actions-badge.atrox.dev/Jaid/commit-from-action/goto"><img src="https://img.shields.io/endpoint.svg?style=flat-square&url=https%3A%2F%2Factions-badge.atrox.dev%2FJaid%2Fcommit-from-action%2Fbadge" alt="Build status"/></a> <a href="https://github.com/Jaid/commit-from-action/commits"><img src="https://img.shields.io/github/commits-since/Jaid/commit-from-action/v1.2.0?style=flat-square&logo=github" alt="Commits since v1.2.0"/></a> <a href="https://github.com/Jaid/commit-from-action/commits"><img src="https://img.shields.io/github/last-commit/Jaid/commit-from-action?style=flat-square&logo=github" alt="Last commit"/></a> <a href="https://github.com/Jaid/commit-from-action/issues"><img src="https://img.shields.io/github/issues/Jaid/commit-from-action?style=flat-square&logo=github" alt="Issues"/></a>  
+<a href="https://npmjs.com/package/commit-from-action"><img src="https://img.shields.io/npm/v/commit-from-action?style=flat-square&logo=npm&label=latest%20version" alt="Latest version on npm"/></a> <a href="https://github.com/Jaid/commit-from-action/network/dependents"><img src="https://img.shields.io/librariesio/dependents/npm/commit-from-action?style=flat-square&logo=npm" alt="Dependents"/></a> <a href="https://npmjs.com/package/commit-from-action"><img src="https://img.shields.io/npm/dm/commit-from-action?style=flat-square&logo=npm" alt="Downloads"/></a>
+
+**Utility for making changes to a repository from a GitHub Action.**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## Installation
-<a href='https://npmjs.com/package/commit-from-action'><img alt='npm logo' src='https://github.com/Jaid/action-readme/raw/master/images/base-assets/npm.png'/></a>
+<a href="https://npmjs.com/package/commit-from-action"><img src="https://img.shields.io/badge/npm-commit--from--action-C23039?style=flat-square&logo=npm" alt="commit-from-action on npm"/></a>
 ```bash
 npm install --save commit-from-action@^1.2.0
 ```
-<a href='https://yarnpkg.com/package/commit-from-action'><img alt='Yarn logo' src='https://github.com/Jaid/action-readme/raw/master/images/base-assets/yarn.png'/></a>
+<a href="https://yarnpkg.com/package/commit-from-action"><img src="https://img.shields.io/badge/Yarn-commit--from--action-2F8CB7?style=flat-square&logo=yarn&logoColor=white" alt="commit-from-action on Yarn"/></a>
 ```bash
 yarn add commit-from-action@^1.2.0
 ```
 
 
 
-## Documentation
 
-* [commit-from-action](#module_commit-from-action)
-    * [module.exports](#exp_module_commit-from-action--module.exports) ⏏
-        * [new module.exports([options])](#new_module_commit-from-action--module.exports_new)
-        * _instance_
-            * [.commits](#module_commit-from-action--module.exports+commits) : <code>number</code>
-            * [.branch](#module_commit-from-action--module.exports+branch) : <code>string</code>
-            * [.pullNumber](#module_commit-from-action--module.exports+pullNumber) : <code>number</code>
-            * [.isMerged](#module_commit-from-action--module.exports+isMerged) : <code>boolean</code>
-            * [.isRemoved](#module_commit-from-action--module.exports+isRemoved) : <code>boolean</code>
-            * [.prepare()](#module_commit-from-action--module.exports+prepare) ⇒ <code>Promise.&lt;void&gt;</code>
-            * [.commit([commitMessage])](#module_commit-from-action--module.exports+commit) ⇒ <code>Promise.&lt;boolean&gt;</code>
-            * [.push()](#module_commit-from-action--module.exports+push) ⇒ <code>Promise.&lt;void&gt;</code>
-        * _inner_
-            * [~Options](#module_commit-from-action--module.exports..Options) : <code>Object</code>
 
-**Kind**: Exported class  
 
-| Param | Type | Default |
-| --- | --- | --- |
-| [options] | <code>Options</code> | <code>{}</code> | 
 
-**Example**  
-```javascript
-import CommitManager from "commit-from-action"
-const commitManager = new CommitManager
+
+## Development
+
+
+
+Setting up:
+```bash
+git clone git@github.com:Jaid/commit-from-action.git
+cd commit-from-action
+npm install
 ```
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_commit-from-action--module.exports)  
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_commit-from-action--module.exports)  
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_commit-from-action--module.exports)  
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_commit-from-action--module.exports)  
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_commit-from-action--module.exports)  
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_commit-from-action--module.exports)  
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_commit-from-action--module.exports)  
-
-| Param | Type |
-| --- | --- |
-| [commitMessage] | <code>string</code> | 
-
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_commit-from-action--module.exports)  
-**Kind**: inner typedef of [<code>module.exports</code>](#exp_module_commit-from-action--module.exports)  
-**Properties**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| commitMessage | <code>\*</code> | If a function is given, it will be called as `async function(commitManager)` |
-| mergeMessage | <code>\*</code> | If a function is given, it will be called as `async function(commitManager, pullNumber)` |
-| pullRequestTitle | <code>\*</code> | If a function is given, it will be called as `async function(commitManager)` |
-| pullRequestBody | <code>\*</code> | If a function is given, it will be called as `async function(commitManager)` |
-| branchPrefix | <code>\*</code> | If a function is given, it will be called as `async function(commitManager)` |
-| autoApprove | <code>boolean</code> |  |
-| autoRemoveBranch | <code>boolean</code> |  |
-| githubTokenInputName | <code>string</code> |  |
-
+Testing in production environment:
+```bash
+npm run test
+```
 
 
 ## License
 ```text
 MIT License
 
-Copyright © 2019, Jaid <jaid.jsx@gmail.com> (github.com/jaid)
+Copyright © 2020, Jaid <jaid.jsx@gmail.com> (github.com/jaid)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
