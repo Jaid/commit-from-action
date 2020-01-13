@@ -36,5 +36,9 @@
   },
   "name": "commit-from-action",
   "description": "Utility for making changes to a repository from a GitHub Action.",
-  "funding": "https://github.com/sponsors/jaid"
+  "funding": "https://github.com/sponsors/jaid",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jaid/commit-from-action"
+  }
 }
