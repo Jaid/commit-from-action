@@ -1,9 +1,9 @@
 # commit-from-action
 
 
-<a href="https://raw.githubusercontent.com/Jaid/commit-from-action/master/license.txt"><img src="https://img.shields.io/github/license/Jaid/commit-from-action?style=flat-square" alt="License"/></a>  
-<a href="https://actions-badge.atrox.dev/Jaid/commit-from-action/goto"><img src="https://img.shields.io/endpoint.svg?style=flat-square&url=https%3A%2F%2Factions-badge.atrox.dev%2FJaid%2Fcommit-from-action%2Fbadge" alt="Build status"/></a> <a href="https://github.com/Jaid/commit-from-action/commits"><img src="https://img.shields.io/github/commits-since/Jaid/commit-from-action/v1.2.0?style=flat-square&logo=github" alt="Commits since v1.2.0"/></a> <a href="https://github.com/Jaid/commit-from-action/commits"><img src="https://img.shields.io/github/last-commit/Jaid/commit-from-action?style=flat-square&logo=github" alt="Last commit"/></a> <a href="https://github.com/Jaid/commit-from-action/issues"><img src="https://img.shields.io/github/issues/Jaid/commit-from-action?style=flat-square&logo=github" alt="Issues"/></a>  
-<a href="https://npmjs.com/package/commit-from-action"><img src="https://img.shields.io/npm/v/commit-from-action?style=flat-square&logo=npm&label=latest%20version" alt="Latest version on npm"/></a> <a href="https://github.com/Jaid/commit-from-action/network/dependents"><img src="https://img.shields.io/librariesio/dependents/npm/commit-from-action?style=flat-square&logo=npm" alt="Dependents"/></a> <a href="https://npmjs.com/package/commit-from-action"><img src="https://img.shields.io/npm/dm/commit-from-action?style=flat-square&logo=npm" alt="Downloads"/></a>
+<a href="https://raw.githubusercontent.com/jaid/commit-from-action/master/license.txt"><img src="https://img.shields.io/github/license/jaid/commit-from-action?style=flat-square" alt="License"/></a> <a href="https://github.com/sponsors/jaid"><img src="https://img.shields.io/badge/<3-Sponsor-FF45F1?style=flat-square" alt="Sponsor commit-from-action"/></a>
+<a href="https://actions-badge.atrox.dev/jaid/commit-from-action/goto"><img src="https://img.shields.io/endpoint.svg?style=flat-square&url=https%3A%2F%2Factions-badge.atrox.dev%2Fjaid%2Fcommit-from-action%2Fbadge" alt="Build status"/></a> <a href="https://github.com/jaid/commit-from-action/commits"><img src="https://img.shields.io/github/commits-since/jaid/commit-from-action/v1.2.0?style=flat-square&logo=github" alt="Commits since v1.2.0"/></a> <a href="https://github.com/jaid/commit-from-action/commits"><img src="https://img.shields.io/github/last-commit/jaid/commit-from-action?style=flat-square&logo=github" alt="Last commit"/></a> <a href="https://github.com/jaid/commit-from-action/issues"><img src="https://img.shields.io/github/issues/jaid/commit-from-action?style=flat-square&logo=github" alt="Issues"/></a>  
+<a href="https://npmjs.com/package/commit-from-action"><img src="https://img.shields.io/npm/v/commit-from-action?style=flat-square&logo=npm&label=latest%20version" alt="Latest version on npm"/></a> <a href="https://github.com/jaid/commit-from-action/network/dependents"><img src="https://img.shields.io/librariesio/dependents/npm/commit-from-action?style=flat-square&logo=npm" alt="Dependents"/></a> <a href="https://npmjs.com/package/commit-from-action"><img src="https://img.shields.io/npm/dm/commit-from-action?style=flat-square&logo=npm" alt="Downloads"/></a>
 
 **Utility for making changes to a repository from a GitHub Action.**
 
@@ -37,14 +37,13 @@ yarn add commit-from-action@^1.2.0
 
 
 
-
 ## Development
 
 
 
 Setting up:
 ```bash
-git clone git@github.com:Jaid/commit-from-action.git
+git clone git@github.com:jaid/commit-from-action.git
 cd commit-from-action
 npm install
 ```
