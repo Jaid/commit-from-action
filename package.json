@@ -35,5 +35,6 @@
     "prepareActionJest": "npm run build:prod"
   },
   "name": "commit-from-action",
-  "description": "Utility for making changes to a repository from a GitHub Action."
+  "description": "Utility for making changes to a repository from a GitHub Action.",
+  "funding": "https://github.com/sponsors/jaid"
 }
