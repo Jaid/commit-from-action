@@ -4,6 +4,7 @@ import {getInput} from "@actions/core"
 import {exec} from "@actions/exec"
 import {context, GitHub} from "@actions/github"
 import chalk from "chalk"
+import getBooleanActionInput from "get-boolean-action-input"
 import isGitRepoDirty from "is-git-repo-dirty"
 import nanoid from "nanoid"
 import resolveAny from "resolve-any"
@@ -16,10 +17,25 @@ import zahl from "zahl"
  * @prop {*} pullRequestTitle If a function is given, it will be called as `async function(commitManager)`
  * @prop {*} pullRequestBody If a function is given, it will be called as `async function(commitManager)`
  * @prop {*} branchPrefix If a function is given, it will be called as `async function(commitManager)`
- * @prop {boolean} autoApprove
- * @prop {boolean} autoRemoveBranch
+ * @prop {boolean|string} autoApprove
+ * @prop {boolean|string} autoRemoveBranch
  * @prop {string} githubTokenInputName
  */
+
+/**
+  * @param {string|boolean} value
+  * @param {boolean} defaultValue
+  * @return {boolean}
+  */
+function getBooleanValue(value, defaultValue) {
+  if (value === undefined) {
+    return defaultValue
+  }
+  if (typeof value === "string") {
+    return getBooleanActionInput(value)
+  }
+  return Boolean(value)
+}
 
 /**
  * @example
@@ -69,6 +85,8 @@ export default class CommitManager {
       branchPrefix: "action-",
       ...options,
     }
+    this.autoApprove = getBooleanValue(this.options.autoApprove, true)
+    this.autoRemoveBranch = getBooleanValue(this.options.autoRemoveBranch, true)
   }
 
   /**
@@ -137,7 +155,7 @@ export default class CommitManager {
     this.pullNumber = pullCreateResult.data.number
     const pullLink = `https://github.com/${process.env.GITHUB_REPOSITORY}/pull/${this.pullNumber}`
     console.log(`Pull with ${zahl(this.commits, "commit")} created: ${chalk.greenBright(pullLink)}`)
-    if (!this.options.autoApprove) {
+    if (!this.autoApprove) {
       return
     }
     await octokit.pulls.merge({
@@ -146,7 +164,7 @@ export default class CommitManager {
       commit_title: await resolveAny(this.options.mergeMessage, this),
     })
     this.isMerged = true
-    if (!this.options.autoRemoveBranch) {
+    if (!this.autoRemoveBranch) {
       return
     }
     await octokit.git.deleteRef({
@@ -160,7 +178,7 @@ export default class CommitManager {
     if (!this.pullNumber) {
       return // Pull request does not exist, nothing to clean
     }
-    if (this.options.autoApprove && !this.isMerged) {
+    if (this.autoApprove && !this.isMerged) {
       console.log(`Automerging failed, pull #${this.pullNumber} will be closed now`)
       const octokit = new GitHub(this.githubToken)
       await octokit.pulls.update({
