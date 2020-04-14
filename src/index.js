@@ -1,12 +1,12 @@
 /** @module commit-from-action */
 
 import {getInput} from "@actions/core"
+import {exec} from "@actions/exec"
 import {context, GitHub} from "@actions/github"
+import chalk from "chalk"
 import isGitRepoDirty from "is-git-repo-dirty"
 import nanoid from "nanoid"
-import {exec} from "@actions/exec"
 import resolveAny from "resolve-any"
-import chalk from "chalk"
 import zahl from "zahl"
 
 /**
