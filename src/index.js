@@ -26,7 +26,7 @@ import zahl from "zahl"
  * import CommitManager from "commit-from-action"
  * const commitManager = new CommitManager
  */
-export default class {
+export default class CommitManager {
 
   /**
    * @type {number}
