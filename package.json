@@ -42,5 +42,18 @@
     "url": "https://github.com/jaid/commit-from-action"
   },
   "homepage": "https://github.com/Jaid/commit-from-action",
-  "keywords": []
+  "keywords": [
+    "action",
+    "actions",
+    "commit",
+    "fs",
+    "git",
+    "git-commit",
+    "github-action",
+    "github-actions",
+    "library",
+    "push",
+    "utility",
+    "vcs"
+  ]
 }
