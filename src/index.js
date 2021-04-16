@@ -6,9 +6,11 @@ import {context, GitHub} from "@actions/github"
 import chalk from "chalk"
 import getBooleanActionInput from "get-boolean-action-input"
 import isGitRepoDirty from "is-git-repo-dirty"
-import { nanoid } from "nanoid"
+import { customAlphabet } from "nanoid"
 import resolveAny from "resolve-any"
 import zahl from "zahl"
+
+const nanoid = customAlphabet("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", 8)
 
 /**
  * @typedef {Object} Options
@@ -96,7 +98,7 @@ export default class CommitManager {
     if (this.branch) {
       return
     }
-    const branchId = nanoid("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", 8)
+    const branchId = nanoid()
     const branchPrefix = await resolveAny(this.options.branchPrefix, this)
     this.branch = `${branchPrefix}${branchId}`
     await exec("git", ["config", "user.email", "action@github.com"])
