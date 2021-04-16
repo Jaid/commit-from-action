@@ -96,12 +96,7 @@ export default class CommitManager {
     if (this.branch) {
       return
     }
-    let branchId
-    if (context.sha) {
-      branchId = context.sha.slice(0, 8)
-    } else {
-      branchId = nanoid("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", 8)
-    }
+    const branchId = nanoid("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", 8)
     const branchPrefix = await resolveAny(this.options.branchPrefix, this)
     this.branch = `${branchPrefix}${branchId}`
     await exec("git", ["config", "user.email", "action@github.com"])
