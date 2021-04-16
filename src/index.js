@@ -6,7 +6,7 @@ import {context, GitHub} from "@actions/github"
 import chalk from "chalk"
 import getBooleanActionInput from "get-boolean-action-input"
 import isGitRepoDirty from "is-git-repo-dirty"
-import nanoid from "nanoid"
+import { nanoid } from "nanoid"
 import resolveAny from "resolve-any"
 import zahl from "zahl"
 
