@@ -147,7 +147,7 @@ export default class CommitManager {
     await exec("git", ["push", "-f", `https://${process.env.GITHUB_ACTOR}:${this.githubToken}@github.com/${process.env.GITHUB_REPOSITORY}.git`, `HEAD:${this.branch}`])
     const octokit = new GitHub(this.githubToken)
     const pullRequest =
-      (await octokit.rest.pulls.list({
+      (await octokit.pulls.list({
         ...context.repo,
         head: `${context.repo.owner}:${this.branch}`,
       }))[0]
