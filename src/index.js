@@ -146,13 +146,18 @@ export default class CommitManager {
     this.githubToken = getInput(this.options.githubTokenInputName, {required: true})
     await exec("git", ["push", "-f", `https://${process.env.GITHUB_ACTOR}:${this.githubToken}@github.com/${process.env.GITHUB_REPOSITORY}.git`, `HEAD:${this.branch}`])
     const octokit = new GitHub(this.githubToken)
-    const pullCreateResult = await octokit.pulls.create({
-      ...context.repo,
-      title: await resolveAny(this.options.pullRequestTitle, this),
-      body: await resolveAny(this.options.pullRequestBody, this),
-      head: this.branch,
-      base: "master",
-    })
+    const pullRequest =
+      (await octokit.rest.pulls.list({
+        ...context.repo,
+        head: `${context.repo.owner}:${this.branch}`,
+      }))[0]
+      || (await octokit.pulls.create({
+        ...context.repo,
+        title: await resolveAny(this.options.pullRequestTitle, this),
+        body: await resolveAny(this.options.pullRequestBody, this),
+        head: this.branch,
+        base: "master",
+      }))
     this.pullNumber = pullCreateResult.data.number
     const pullLink = `https://github.com/${process.env.GITHUB_REPOSITORY}/pull/${this.pullNumber}`
     console.log(`Pull with ${zahl(this.commits, "commit")} created: ${chalk.greenBright(pullLink)}`)
