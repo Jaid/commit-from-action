@@ -150,15 +150,15 @@ export default class CommitManager {
       (await octokit.pulls.list({
         ...context.repo,
         head: `${context.repo.owner}:${this.branch}`,
-      }))[0]
+      })).data[0]
       || (await octokit.pulls.create({
         ...context.repo,
         title: await resolveAny(this.options.pullRequestTitle, this),
         body: await resolveAny(this.options.pullRequestBody, this),
         head: this.branch,
         base: "master",
-      }))
-    this.pullNumber = pullCreateResult.data.number
+      })).data
+    this.pullNumber = pullRequest.number
     const pullLink = `https://github.com/${process.env.GITHUB_REPOSITORY}/pull/${this.pullNumber}`
     console.log(`Pull with ${zahl(this.commits, "commit")} created: ${chalk.greenBright(pullLink)}`)
     if (!this.autoApprove) {
