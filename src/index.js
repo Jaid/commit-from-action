@@ -20,6 +20,7 @@ import zahl from "zahl"
  * @prop {boolean|string} autoApprove
  * @prop {boolean|string} autoRemoveBranch
  * @prop {string} githubTokenInputName
+ * @prop {string[]} [ignoreFiles = []]
  */
 
 /**
@@ -83,6 +84,7 @@ export default class CommitManager {
       autoRemoveBranch: true,
       githubTokenInputName: "githubToken",
       branchPrefix: "action-",
+      ignoreFiles: [],
       ...options,
     }
     this.autoApprove = getBooleanValue(this.options.autoApprove, true)
@@ -119,7 +121,14 @@ export default class CommitManager {
       return false
     }
     await this.prepare()
-    await exec("git", ["add", "--all"])
+    const addCommandArguments = ["add", "--all"]
+    if (this.options.ignoreFiles.length) {
+      addCommandArguments.push("--")
+      for (const ignoreEntry of this.options.ignoreFiles) {
+        addCommandArguments.push(`:!${ignoreEntry}`)
+      }
+    }
+    await exec("git", addCommandArguments)
     let message
     if (commitMessage) {
       message = commitMessage
