@@ -178,7 +178,7 @@ export default class CommitManager {
     }
     this.githubToken = getInput(this.options.githubTokenInputName, {required: true})
     await exec("git", ["push", "--force", `https://${process.env.GITHUB_ACTOR}:${this.githubToken}@github.com/${process.env.GITHUB_REPOSITORY}.git`, `HEAD:${this.branch}`])
-    const octokit = github.getOctokit(this.githubToken)
+    const octokit = github.getOctokit(this.githubToken).rest
     const pullRequest = await this.findOrCreatePullRequest(octokit)
     this.pullNumber = pullRequest.number
     const pullLink = `https://github.com/${process.env.GITHUB_REPOSITORY}/pull/${this.pullNumber}`
