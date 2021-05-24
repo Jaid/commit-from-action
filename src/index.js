@@ -101,7 +101,7 @@ export default class CommitManager {
       return
     }
     if (this.options.branch) {
-      this.branch = this.options.branch
+      this.branch = await resolveAny(this.options.branch, this)
     } else {
       const branchPrefix = await resolveAny(this.options.branchPrefix, this)
       const branch = generateBranchName(branchPrefix)
