@@ -16,6 +16,7 @@ import zahl from "zahl"
  * @prop {*} mergeMessage If a function is given, it will be called as `async function(commitManager, pullNumber)`
  * @prop {*} pullRequestTitle If a function is given, it will be called as `async function(commitManager)`
  * @prop {*} pullRequestBody If a function is given, it will be called as `async function(commitManager)`
+ * @prop {*} branch If a function is given, it will be called as `async function(commitManager)`
  * @prop {*} branchPrefix If a function is given, it will be called as `async function(commitManager)`
  * @prop {boolean|string} autoApprove
  * @prop {boolean|string} autoRemoveBranch
@@ -105,7 +106,7 @@ export default class CommitManager {
       branchId = nanoid("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", 8)
     }
     const branchPrefix = await resolveAny(this.options.branchPrefix, this)
-    this.branch = `${branchPrefix}${branchId}`
+    this.branch = this.options.branch || `${branchPrefix}${branchId}`
     await exec("git", ["config", "user.email", "action@github.com"])
     await exec("git", ["config", "user.name", "GitHub Action"])
     await exec("git", ["checkout", "-b", this.branch])
@@ -152,16 +153,21 @@ export default class CommitManager {
       return
     }
     this.githubToken = getInput(this.options.githubTokenInputName, {required: true})
-    await exec("git", ["push", `https://${process.env.GITHUB_ACTOR}:${this.githubToken}@github.com/${process.env.GITHUB_REPOSITORY}.git`, `HEAD:${this.branch}`])
+    await exec("git", ["push", "-f", `https://${process.env.GITHUB_ACTOR}:${this.githubToken}@github.com/${process.env.GITHUB_REPOSITORY}.git`, `HEAD:${this.branch}`])
     const octokit = new GitHub(this.githubToken)
-    const pullCreateResult = await octokit.pulls.create({
-      ...context.repo,
-      title: await resolveAny(this.options.pullRequestTitle, this),
-      body: await resolveAny(this.options.pullRequestBody, this),
-      head: this.branch,
-      base: "master",
-    })
-    this.pullNumber = pullCreateResult.data.number
+    const pullRequest =
+      (await octokit.pulls.list({
+        ...context.repo,
+        head: `${context.repo.owner}:${this.branch}`,
+      })).data[0]
+      || (await octokit.pulls.create({
+        ...context.repo,
+        title: await resolveAny(this.options.pullRequestTitle, this),
+        body: await resolveAny(this.options.pullRequestBody, this),
+        head: this.branch,
+        base: "master",
+      })).data
+    this.pullNumber = pullRequest.number
     const pullLink = `https://github.com/${process.env.GITHUB_REPOSITORY}/pull/${this.pullNumber}`
     console.log(`Pull with ${zahl(this.commits, "commit")} created: ${chalk.greenBright(pullLink)}`)
     if (!this.autoApprove) {
