@@ -48,6 +48,78 @@ await commitManager.finalize() // Does some cleaning
 
 
 
+## Options
+
+
+
+<table>
+<tr>
+<th></th>
+<th>Type</th>
+<th>Default</th>
+<th>Info</th>
+</tr>
+<tr>
+<td>autoApprove</td>
+<td>boolean</td>
+<td>true</td>
+<td>If true, the created pull request will be automatically approved and merged.</td>
+</tr>
+<tr>
+<td>autoRemoveBranch</td>
+<td>boolean</td>
+<td>true</td>
+<td>If true, the created branch will be automatically deleted. Good for avoiding mess.</td>
+</tr>
+<tr>
+<td>branch</td>
+<td>string</td>
+<td>randomly generated</td>
+<td>Name of the temporary branch. If this is explicitly set, option `branchPrefix` is ignored.</td>
+</tr>
+<tr>
+<td>branchPrefix</td>
+<td>string</td>
+<td>"action-"</td>
+<td>Starting string of the temporary branch's name. The rest of it will be randomly generated.</td>
+</tr>
+<tr>
+<td>commitMessage</td>
+<td>string</td>
+<td>"Modified repository in GitHub Action"</td>
+<td>Default commit message to use, if commitManager.commit() is called without an argument.</td>
+</tr>
+<tr>
+<td>githubTokenInputName</td>
+<td>string</td>
+<td>"githubToken"</td>
+<td>The key of your action's input that passes the user's GitHub token.</td>
+</tr>
+<tr>
+<td>ignoreFiles</td>
+<td>string[]</td>
+<td>[]</td>
+<td>List of globs of files not to commit.</td>
+</tr>
+<tr>
+<td>mergeMessage</td>
+<td>string</td>
+<td>"Automatically merged commits from pull {pullNumber}"</td>
+<td>Commit message of the pull request's merge.</td>
+</tr>
+<tr>
+<td>pullRequestBody</td>
+<td>string</td>
+<td>"Hewwo!"</td>
+<td>Description of the automatically created pull request.</td>
+</tr>
+<tr>
+<td>pullRequestTitle</td>
+<td>string</td>
+<td>"Automatic changes from GitHub Action"</td>
+<td>Title of the automatically created pull request.</td>
+</tr>
+</table>
 
 
 
@@ -70,10 +142,6 @@ Setting up:
 git clone git@github.com:jaid/commit-from-action.git
 cd commit-from-action
 npm install
-```
-Testing in production environment:
-```bash
-npm run test
 ```
 
 

@@ -1,0 +1,40 @@
+commitMessage :
+  default: '"Modified repository in GitHub Action"'
+  type: string
+  info: Default commit message to use, if commitManager.commit() is called without an argument.
+mergeMessage:
+  default: '"Automatically merged commits from pull {pullNumber}"'
+  type: string
+  info: Commit message of the pull request's merge.
+pullRequestTitle:
+  default: '"Automatic changes from GitHub Action"'
+  type: string
+  info: Title of the automatically created pull request.
+pullRequestBody:
+  default: '"Hewwo!"'
+  type: string
+  info: Description of the automatically created pull request.
+branch:
+  default: randomly generated
+  type: string
+  info: Name of the temporary branch. If this is explicitly set, option `branchPrefix` is ignored.
+branchPrefix:
+  default: '"action-"'
+  type: string
+  info: Starting string of the temporary branch's name. The rest of it will be randomly generated.
+autoApprove:
+  default: true
+  type: boolean
+  info: If true, the created pull request will be automatically approved and merged.
+autoRemoveBranch:
+  default: true
+  type: boolean
+  info: If true, the created branch will be automatically deleted. Good for avoiding mess.
+githubTokenInputName:
+  default: '"githubToken"'
+  type: string
+  info: The key of your action's input that passes the user's GitHub token.
+ignoreFiles:
+  default: "[]"
+  type: string[]
+  info: List of globs of files not to commit.
