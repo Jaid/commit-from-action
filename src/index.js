@@ -123,6 +123,7 @@ export default class CommitManager {
     }
     await this.prepare()
     const addCommandArguments = ["add", "--all"]
+    // git add all, but ignore specific globs https://stackoverflow.com/a/51914162/15443125
     if (this.options.ignoreFiles.length) {
       addCommandArguments.push("--")
       for (const ignoreEntry of this.options.ignoreFiles) {
