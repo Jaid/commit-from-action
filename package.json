@@ -14,13 +14,11 @@
     "zahl": "^2.0.6"
   },
   "devDependencies": {
-    "acorn": "^8.2.4",
     "babel-jest": "^26.6.3",
     "babel-preset-jaid": "^11.0.0",
     "browserslist-config-jaid-node": "^3.0.0",
     "eslint": "^7.27.0",
     "eslint-config-jaid": "^1.49.0",
-    "jest": "^26.6.3",
     "rimraf": "^3.0.2",
     "webpack-config-jaid": "^12.2.0"
   },
