@@ -2,7 +2,7 @@
 
 import {getInput} from "@actions/core"
 import {exec} from "@actions/exec"
-import {context, GitHub} from "@actions/github"
+import github, {context} from "@actions/github"
 import chalk from "chalk"
 import getBooleanActionInput from "get-boolean-action-input"
 import isGitRepoDirty from "is-git-repo-dirty"
@@ -178,7 +178,7 @@ export default class CommitManager {
     }
     this.githubToken = getInput(this.options.githubTokenInputName, {required: true})
     await exec("git", ["push", "--force", `https://${process.env.GITHUB_ACTOR}:${this.githubToken}@github.com/${process.env.GITHUB_REPOSITORY}.git`, `HEAD:${this.branch}`])
-    const octokit = new GitHub(this.githubToken)
+    const octokit = github.getOctokit(this.githubToken)
     const pullRequest = await this.findOrCreatePullRequest(octokit)
     this.pullNumber = pullRequest.number
     const pullLink = `https://github.com/${process.env.GITHUB_REPOSITORY}/pull/${this.pullNumber}`
