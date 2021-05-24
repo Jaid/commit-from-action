@@ -142,6 +142,29 @@ export default class CommitManager {
   }
 
   /**
+   * @param {import("@actions/github").GitHub} octokit
+   * @return {Promise<*>}
+   */
+  async findOrCreatePullRequest(octokit) {
+    const pullsListResult = await octokit.pulls.list({
+      ...context.repo,
+      head: `${context.repo.owner}:${this.branch}`,
+    })
+    const existingPullRequest = pullsListResult.data[0]
+    if (existingPullRequest) {
+      return existingPullRequest
+    }
+    const pullRequest = await octokit.pulls.create({
+      ...context.repo,
+      title: await resolveAny(this.options.pullRequestTitle, this),
+      body: await resolveAny(this.options.pullRequestBody, this),
+      head: this.branch,
+      base: "master",
+    })
+    return pullRequest.data
+  }
+
+  /**
    * @return {Promise<void>}
    */
   async push() {
@@ -155,18 +178,7 @@ export default class CommitManager {
     this.githubToken = getInput(this.options.githubTokenInputName, {required: true})
     await exec("git", ["push", "--force", `https://${process.env.GITHUB_ACTOR}:${this.githubToken}@github.com/${process.env.GITHUB_REPOSITORY}.git`, `HEAD:${this.branch}`])
     const octokit = new GitHub(this.githubToken)
-    const pullRequest
-      = (await octokit.pulls.list({
-        ...context.repo,
-        head: `${context.repo.owner}:${this.branch}`,
-      })).data[0]
-      || (await octokit.pulls.create({
-        ...context.repo,
-        title: await resolveAny(this.options.pullRequestTitle, this),
-        body: await resolveAny(this.options.pullRequestBody, this),
-        head: this.branch,
-        base: "master",
-      })).data
+    const pullRequest = await this.findOrCreatePullRequest(octokit)
     this.pullNumber = pullRequest.number
     const pullLink = `https://github.com/${process.env.GITHUB_REPOSITORY}/pull/${this.pullNumber}`
     console.log(`Pull with ${zahl(this.commits, "commit")} created: ${chalk.greenBright(pullLink)}`)
