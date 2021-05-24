@@ -29,7 +29,6 @@
     "babel:test": "rimraf dist/transpiled/test && NODE_ENV=test babel --out-dir dist/transpiled/test src",
     "build:prod": "NODE_ENV=production webpack",
     "build:dev": "NODE_ENV=development webpack",
-    "test": "echo No test needed",
     "prepareActionJest": "npm run build:prod"
   },
   "name": "commit-from-action",
