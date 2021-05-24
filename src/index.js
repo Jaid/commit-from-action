@@ -6,11 +6,10 @@ import {context, GitHub} from "@actions/github"
 import chalk from "chalk"
 import getBooleanActionInput from "get-boolean-action-input"
 import isGitRepoDirty from "is-git-repo-dirty"
-import { customAlphabet } from "nanoid"
 import resolveAny from "resolve-any"
 import zahl from "zahl"
 
-const nanoid = customAlphabet("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", 8)
+import generateBranchName from "lib/generateBranchName"
 
 /**
  * @typedef {Object} Options
@@ -101,9 +100,13 @@ export default class CommitManager {
     if (this.branch) {
       return
     }
-    const branchId = nanoid()
-    const branchPrefix = await resolveAny(this.options.branchPrefix, this)
-    this.branch = this.options.branch || `${branchPrefix}${branchId}`
+    if (this.options.branch) {
+      this.branch = this.options.branch
+    } else {
+      const branchPrefix = await resolveAny(this.options.branchPrefix, this)
+      const branch = generateBranchName(branchPrefix)
+      this.branch = branch
+    }
     await exec("git", ["config", "user.email", "action@github.com"])
     await exec("git", ["config", "user.name", "GitHub Action"])
     await exec("git", ["checkout", "-b", this.branch])
@@ -152,8 +155,8 @@ export default class CommitManager {
     this.githubToken = getInput(this.options.githubTokenInputName, {required: true})
     await exec("git", ["push", "-f", `https://${process.env.GITHUB_ACTOR}:${this.githubToken}@github.com/${process.env.GITHUB_REPOSITORY}.git`, `HEAD:${this.branch}`])
     const octokit = new GitHub(this.githubToken)
-    const pullRequest =
-      (await octokit.pulls.list({
+    const pullRequest
+      = (await octokit.pulls.list({
         ...context.repo,
         head: `${context.repo.owner}:${this.branch}`,
       })).data[0]
