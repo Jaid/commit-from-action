@@ -37,9 +37,14 @@ import {writeFile} from "fs/promises"
 await writeFile("abc.txt", "abc")
 
 const commitManager = new CommitManager
-await commitManager.commit("Added file abc.txt")
-await commitManager.push()
-await commitManager.finalize() // Does some cleaning
+try {
+  await commitManager.commit("Added file abc.txt")
+  await commitManager.push()
+} catch (error) {
+  console.error(error)
+} finally {
+  await commitManager.finalize() // Does some cleaning, should be called regardless of whether commit and push are successful or not.
+}
 ```
 
 
