@@ -43,7 +43,8 @@ try {
 } catch (error) {
   console.error(error)
 } finally {
-  await commitManager.finalize() // Does some cleaning, should be called regardless of whether commit and push are successful or not.
+  // Does some cleaning, should be called regardless of whether commit and push are successful or not.
+  await commitManager.finalize()
 }
 ```
 
