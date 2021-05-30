@@ -137,7 +137,7 @@ export default class CommitManager {
     } else {
       message = await resolveAny(this.options.commitMessage, this)
     }
-    await exec("git", ["commit", "--all", "--message", message])
+    await exec("git", ["commit", "--message", message])
     this.commits++
     return true
   }
