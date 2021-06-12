@@ -137,18 +137,20 @@ export default class CommitManager {
     } else {
       message = await resolveAny(this.options.commitMessage, this)
     }
-    let errorOutput = ""
+    let commandOutput = ""
+    const addToCommandOutput = buffer => {
+      commandOutput += buffer.toString()
+    }
     try {
       await exec("git", ["commit", "--message", message], {
         listeners: {
-          stderr: buffer => {
-            errorOutput += buffer.toString()
-          },
+          stdout: addToCommandOutput,
+          stderr: addToCommandOutput,
         },
       })
     } catch (error) {
       // If “git commit” errors because there are no files added, do not throw, because this isn't really a bad thing
-      if (errorOutput.includes("no changes added to commit")) {
+      if (commandOutput.includes("no changes added to commit")) {
         return false
       }
       throw error
