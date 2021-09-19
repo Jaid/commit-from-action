@@ -53,5 +53,6 @@
     "git-commit",
     "github-actions",
     "github-action"
-  ]
+  ],
+  "type": "module"
 }
